@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@100..900&family=Playpen+Sans+Thai:wght@100..800&family=Sriracha&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     :root {
       --sky-deep: #0b3d6e;
@@ -90,9 +91,9 @@
       transition: transform .2s;
     }
     .sticker:hover { transform: rotate(6deg) scale(1.12); }
-
     @media (max-width: 576px) { .sticker { width: 52px; } }
-    /* ---------- เอฟเฟกต์ 1: ฟ้าแจ่มใสเมื่อกดเปิดเพลง ---------- */
+
+    /* ---------- เอฟเฟกต์: ฟ้าแจ่มใสเมื่อกดเปิดเพลง ---------- */
     .rain::before, .rain::after { transition: opacity 1.5s; }
     .hero-bg.sunny::before, .hero-bg.sunny::after { opacity: 0; }
     .hero-bg.sunny {
@@ -101,18 +102,14 @@
         linear-gradient(180deg, #3b8fdc 0%, #7cc2ff 60%, #d4ecff 100%);
     }
 
-    /* ---------- เอฟเฟกต์ 2: สติกเกอร์ลอยขึ้นลง ---------- */
+    /* ---------- เอฟเฟกต์: สติกเกอร์ลอยขึ้นลง ---------- */
     @keyframes float { 50% { translate: 0 -12px; } }
     .sticker { animation: float 3.5s ease-in-out infinite; }
 
-    /* ---------- เอฟเฟกต์ 3: การ์ดค่อยๆ ปรากฏตอนเลื่อนหน้า ---------- */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
-    .reveal.show { opacity: 1; transform: none; }
-
-    /* ---------- เอฟเฟกต์ 4: ปกหนังสือเอียงตามเมาส์ ---------- */
+    /* ---------- เอฟเฟกต์: ปกหนังสือเอียงตามเมาส์ ---------- */
     .book-img { transition: transform .15s; }
 
-    /* ---------- เอฟเฟกต์ 5: วงน้ำกระเพื่อมเมื่อคลิกใน Hero ---------- */
+    /* ---------- เอฟเฟกต์: วงน้ำกระเพื่อมเมื่อคลิกใน Hero ---------- */
     .ripple {
       position: absolute; width: 10px; height: 10px; z-index: 1; pointer-events: none;
       border: 2px solid rgba(255, 255, 255, .85); border-radius: 50%;
@@ -120,7 +117,7 @@
     }
     @keyframes ripple { to { width: 120px; height: 120px; opacity: 0; } }
 
-    /* ---------- เอฟเฟกต์ 6: เมฆลอยผ่าน ---------- */
+    /* ---------- เอฟเฟกต์: เมฆลอยผ่าน ---------- */
     .cloud {
       position: absolute; left: -260px; width: 180px; height: 50px; z-index: 0;
       background: rgba(255, 255, 255, .22); border-radius: 50px; filter: blur(10px);
@@ -128,7 +125,7 @@
     }
     @keyframes drift { to { left: 110%; } }
 
-    /* ---------- เอฟเฟกต์ 7: ชื่อภาษาไทยแวววาว ---------- */
+    /* ---------- เอฟเฟกต์: ชื่อภาษาไทยแวววาว ---------- */
     .shine {
       background: linear-gradient(90deg, #fff 0%, var(--sun) 50%, #fff 100%);
       background-size: 200% auto; -webkit-background-clip: text; background-clip: text;
@@ -136,13 +133,13 @@
     }
     @keyframes shine { to { background-position: 200% center; } }
 
-    /* ---------- เอฟเฟกต์ 8: แถบความคืบหน้าตอนเลื่อนหน้า ---------- */
+    /* ---------- เอฟเฟกต์: แถบความคืบหน้าตอนเลื่อนหน้า ---------- */
     #progress {
       position: fixed; top: 0; left: 0; height: 4px; width: 0; z-index: 30;
       background: linear-gradient(90deg, var(--sky-soft), var(--sun));
     }
 
-    /* ---------- ตกแต่งรอบนอก 1: พื้นหลังหน้าเว็บมีสายฝนจางๆ + แสงฟุ้ง ---------- */
+    /* ---------- พื้นหลังหน้าเว็บมีสายฝนจางๆ + แสงฟุ้ง ---------- */
     body::before {
       content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background-image:
@@ -154,7 +151,7 @@
     }
     @keyframes bgrain { to { background-position: 0 0, 0 0, -36px 120px; } }
 
-    /* ---------- ตกแต่งรอบนอก 2: คลื่นคั่นระหว่างส่วน ---------- */
+    /* ---------- คลื่นคั่นระหว่างส่วน ---------- */
     .wave { position: absolute; left: 0; right: 0; height: 60px; z-index: 1; pointer-events: none;
       background-size: 100% 100%; background-repeat: no-repeat; }
     .wave-bottom { bottom: -1px;
@@ -164,22 +161,18 @@
     .hero-bg { padding-bottom: 5rem !important; }
     .order-bg { padding-top: 5rem !important; }
 
-    /* ---------- ตกแต่งรอบนอก 3: ร่ม เมฆ ประกาย ลอยอยู่ขอบจอ (จอกว้างเท่านั้น) ---------- */
+    /* ---------- ตกแต่งรอบนอก (จอกว้างเท่านั้น) ---------- */
     .side-deco { display: none; }
     @media (min-width: 1600px) {
       .side-deco { display: block; position: fixed; inset: 0; z-index: 0; pointer-events: none; }
       .side-deco span { position: absolute; color: var(--sky); opacity: .45; animation: float 6s ease-in-out infinite; }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      body::before, .side-deco span { animation: none; }
-      .rain::before, .rain::after { animation: none; }
-      .cloud, .shine, .ripple { animation: none; }
-      .sticker { animation: none; }
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .book-img { transform: none !important; }
-      html { scroll-behavior: auto; }
-    }
+    /* ---------- AOS fade-up: เลื่อนระยะสั้นให้ดูนุ่ม ---------- */
+    [data-aos="fade-up"] { transform: translate3d(0, 40px, 0); }
+    [data-aos="fade-up"].aos-animate { transform: translate3d(0, 0, 0); }
+
+    /* ---------- Carousel ---------- */
     .carousel-item img {
       width: 100%;
       height: 450px;
@@ -189,23 +182,20 @@
       .carousel-item img { height: 300px; }
     }
 
-    /* ชั้นสีเข้มไล่จากล่างขึ้นบน ช่วยให้ข้อความอ่านง่าย */
-    .carousel-item::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0) 60%);
-      pointer-events: none;
-    }
-    .carousel-caption {
-      z-index: 2;
-      text-align: left;
-      left: 8%;
-      right: 8%;
-      bottom: 2.5rem;
+    /* ลดแอนิเมชันที่เป็นการเคลื่อนไหวต่อเนื่อง (ไม่แตะเอฟเฟกต์ลอยขึ้นของ AOS) */
+    @media (prefers-reduced-motion: reduce) {
+      body::before, .side-deco span { animation: none; }
+      .rain::before, .rain::after { animation: none; }
+      .cloud, .shine, .ripple { animation: none; }
+      .sticker { animation: none; }
+      .book-img { transform: none !important; }
+      html { scroll-behavior: auto; }
     }
   </style>
-    
+</head>
+
+<body>
+  <div id="progress"></div>
 
   <!-- Header -->
   <header class="site-header">
@@ -223,6 +213,7 @@
           <li class="nav-item"><a class="nav-link" href="#summary">เกี่ยวกับหนังสือ</a></li>
           <li class="nav-item"><a class="nav-link" href="#review">รีวิว</a></li>
           <li class="nav-item"><a class="nav-link" href="#order">ช่องทางการสั่งซื้อ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">แกลเลอรี</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
         </ul>
       </div>
@@ -238,9 +229,12 @@
       <div class="container py-3">
         <div class="row align-items-center g-4">
           <div class="col-12 col-md-5 text-center">
-            <img src="images/123.webp" alt="หนังสือ Weathering with you" class="img-fluid book-img">
-            </div> 
-          <div class="col-12 col-md-7">
+            <!-- ครอบด้วย div เพื่อไม่ให้ชนกับเอฟเฟกต์เอียงตามเมาส์ของ .book-img -->
+            <div data-aos="fade-up" data-aos-duration="700">
+              <img src="images/123.webp" alt="หนังสือ Weathering with you" class="img-fluid book-img">
+            </div>
+          </div>
+          <div class="col-12 col-md-7" data-aos="fade-up" data-aos-duration="700" data-aos-delay="120">
             <h1 class="sriracha-regular display-4">Weathering With You</h1>
             <h2 class="sriracha-regular h2 shine">ฤดูฝัน ฉันมีเธอ</h2>
             <p class="lead mt-3 mb-0">มาโคโตะ ชินไค เขียน</p>
@@ -260,7 +254,7 @@
     <!-- เกี่ยวกับหนังสือ -->
     <section id="summary" class="section-wrap py-5">
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" data-aos="fade-up">
           <h3 class="sriracha-regular sec-title">เกี่ยวกับหนังสือ</h3>
         </div>
         <div class="row justify-content-center">
@@ -284,9 +278,8 @@
     <section id="review" class="section-wrap bg-review py-5">
       <div class="container">
         <div class="text-center mb-4">
-          <h3 class="sriracha-regular sec-title">รีวิว</h3>
-          <div class="stars mt-2" aria-label="คะแนน 4.5 จาก 5">★★★★½</div>
-        </div>
+          <h3 class="sriracha-regular sec-title" data-aos="fade-up">รีวิว</h3>
+          
         <div class="row justify-content-center">
           <div class="col-12 col-lg-10">
             <div class="review-wrap">
@@ -300,7 +293,7 @@
                 คนที่ชอบผลงานของมาโคโตะ ชินไค ผู้ที่เคยดูภาพยนตร์แล้วอยากลงลึกกับเรื่องราว
                 และคนที่ชอบเรื่องความรักผสมแฟนตาซี
               </p>
-              <img src="images/12345678.webp" alt="" class="sticker" style="bottom: 6%; left: 5%;">
+              <img src="images/12345678.webp" alt="" class="sticker" style="bottom: 6%; left:-10%;">
             </div>
           </div>
         </div>
@@ -309,7 +302,7 @@
 
     <!-- สิ่งที่ได้จากการอ่าน -->
     <section id="benefit" class="section-wrap container py-5">
-      <div class="text-center mb-4">
+      <div class="text-center mb-4" data-aos="fade-up">
         <h3 class="sriracha-regular sec-title">สิ่งที่ได้จากการอ่าน</h3>
       </div>
       <div class="row g-4">
@@ -349,7 +342,7 @@
     <section id="order" class="section-wrap order-bg py-5">
       <div class="wave wave-top"></div>
       <div class="container">
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" data-aos="fade-up">
           <h3 class="sriracha-regular sec-title">ช่องทางการสั่งซื้อ</h3>
         </div>
         <div class="row g-4 justify-content-center">
@@ -374,120 +367,59 @@
       <img src="images/1234567.webp" alt="" class="sticker" style="bottom: 6%; left: 5%;">
     </section>
 
-    <body class="bg-light">
+    <!-- แกลเลอรี (Carousel) -->
+    <section id="gallery" class="section-wrap py-5">
+      <div class="container">
+        <div class="text-center mb-4" data-aos="fade-up">
+          <h3 class="sriracha-regular sec-title">แกลเลอรี</h3>
+        </div>
+        <!-- ใส่ data-aos ที่ตัวครอบ ไม่ใส่ที่ .carousel-item -->
+        <div data-aos="fade-up" data-aos-duration="700">
+          <div id="myCarousel" class="carousel slide carousel-fade shadow rounded overflow-hidden"
+               data-bs-ride="carousel" data-bs-interval="5000">
 
-<div class="container py-5">
-  <div id="myCarousel" class="carousel slide shadow rounded overflow-hidden"
-       data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="สไลด์ที่ 1"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="สไลด์ที่ 2"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="สไลด์ที่ 3"></button>
+            </div>
 
-    <!-- จุดบอกตำแหน่ง -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="สไลด์ที่ 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="สไลด์ที่ 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="สไลด์ที่ 3"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="สไลด์ที่ 4"></button>
-    </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="images/111.webp" class="d-block w-100" alt="คำอธิบายรูปที่ 1">
+              </div>
+              <div class="carousel-item">
+                <img src="images/222.webp" class="d-block w-100" alt="คำอธิบายรูปที่ 2">
+              </div>
+              <div class="carousel-item">
+                <img src="images/333.webp" class="d-block w-100" alt="คำอธิบายรูปที่ 3">
+              </div>
+            </div>
 
-    <!-- สไลด์ -->
-    <div class="carousel-inner">
-      <div class="carousel-item active s1">
-        <div class="carousel-caption">
-          <h2>เริ่มต้นอย่างง่าย</h2>
-          <p>ใช้ Carousel ที่มากับ Bootstrap ไม่ต้องเขียน JavaScript เพิ่ม</p>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">ก่อนหน้า</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">ถัดไป</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="carousel-item s2">
-        <div class="carousel-caption">
-          <h2>ใช้งานได้ทุกอุปกรณ์</h2>
-          <p>ปรับขนาดตามหน้าจออัตโนมัติ และปัดซ้าย–ขวาบนมือถือได้</p>
-        </div>
-      </div>
-      <div class="carousel-item s3">
-        <div class="carousel-caption">
-          <h2>ควบคุมด้วยคีย์บอร์ด</h2>
-          <p>กดลูกศรซ้ายหรือขวาเพื่อเปลี่ยนสไลด์ได้</p>
-        </div>
-      </div>
-      <div class="carousel-item s4">
-        <div class="carousel-caption">
-          <h2>เล่นอัตโนมัติ</h2>
-          <p>เปลี่ยนสไลด์เองทุก 5 วินาที และหยุดเมื่อเมาส์วางเหนือภาพ</p>
-        </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- ปุ่มก่อนหน้า / ถัดไป -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">ก่อนหน้า</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">ถัดไป</span>
-    </button>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </main>
-  <body class="bg-light">
-
-<div class="container py-5">
-  <div id="myCarousel" class="carousel slide carousel-fade shadow rounded overflow-hidden"
-       data-bs-ride="carousel" data-bs-interval="5000">
-
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="สไลด์ที่ 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="สไลด์ที่ 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="สไลด์ที่ 3"></button>
-    </div>
-
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="images/111.webp" alt="คำอธิบายรูปที่ 1">
-        <div class="carousel-caption">
-          
-        </div>
-      </div>
-
-      <div class="carousel-item">
-        <img src="images/222.webp" alt="คำอธิบายรูปที่ 2">
-        <div class="carousel-caption">
-          
-        </div>
-      </div>
-
-      <div class="carousel-item">
-        <img src="images/333.webp" alt="คำอธิบายรูปที่ 3">
-        <div class="carousel-caption">
-          
-        </div>
-      </div>
-    </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">ก่อนหน้า</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">ถัดไป</span>
-    </button>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
   <!-- Footer -->
   <footer id="about" class="py-4">
     <div class="container">
       <div class="row g-3 align-items-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-8" data-aos="fade-up">
           <h5 class="sriracha-regular mb-1">About Us</h5>
           <p class="mb-0">Otabook เว็บแนะนำหนังสือการ์ตูนญี่ปุ่น</p>
         </div>
-        <div class="col-12 col-md-4 text-md-end">
+        <div class="col-12 col-md-4 text-md-end" data-aos="fade-up" data-aos-delay="100">
           <a href="#home">กลับขึ้นด้านบน</a>
         </div>
       </div>
@@ -496,12 +428,53 @@
     </div>
   </footer>
 
+  <!-- สคริปต์: โหลด Bootstrap ครั้งเดียว -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const hero = document.querySelector(".hero-bg");
 
-    /* ปุ่มเพลง + ฟ้าแจ่มใส */
+    /* ---------- ใส่ data-aos ให้กรอบการ์ดและข้อความข้างใน ---------- */
+    document.querySelectorAll(".about-card, .review-wrap, .buy-card, .benefit-card").forEach(box => {
+      // ใส่เอฟเฟกต์ที่คอลัมน์ครอบ ไม่ใส่ที่ตัวการ์ดโดยตรง
+      // เพราะ .benefit-card มี hover ที่ใช้ transform ซึ่งจะชนกับ AOS
+      const col = box.closest('[class*="col-"]');
+      if (!col) return;
+      const index = Array.from(col.parentElement.children).indexOf(col);
+      const base = index * 100;   // การ์ดที่อยู่ข้างกันลอยไล่ห่างกัน 100 มิลลิวินาที
+
+      // 1) กรอบลอยขึ้นก่อน
+      col.setAttribute("data-aos", "fade-up");
+      col.setAttribute("data-aos-duration", "550");
+      col.setAttribute("data-aos-delay", base);
+
+      // 2) ข้อความข้างในลอยตามมา เริ่มหลังกรอบ 180 มิลลิวินาที แล้วไล่ทีละบรรทัดห่างกัน 70
+      box.querySelectorAll("h5, h6, p, a.btn").forEach((el, i) => {
+        el.setAttribute("data-aos", "fade-up");
+        el.setAttribute("data-aos-duration", "550");
+        el.setAttribute("data-aos-delay", base + 180 + i * 70);
+      });
+    });
+
+    /* ---------- เริ่มใช้ AOS ---------- */
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 600,
+        offset: 100,
+        easing: "ease-out-cubic",
+        once: false,    // เล่นซ้ำทุกครั้งที่กลับมาเห็น
+        mirror: true    // เล่นตอนเลื่อนขึ้นมาเจอด้วย ไม่ใช่แค่ตอนเลื่อนลง
+      });
+      // คำนวณตำแหน่งใหม่เมื่อรูปทั้งหมดโหลดเสร็จ
+      addEventListener("load", () => AOS.refresh());
+    } else {
+      // AOS โหลดไม่ขึ้น: เอา data-aos ออก เพื่อให้เนื้อหาแสดงตามปกติ ไม่ค้างเป็นสีจาง
+      document.querySelectorAll("[data-aos]").forEach(el => el.removeAttribute("data-aos"));
+      console.warn("โหลด AOS ไม่สำเร็จ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตหรือ CDN");
+    }
+
+    /* ---------- ปุ่มเพลง + ฟ้าแจ่มใส ---------- */
     const btn = document.getElementById("musicBtn");
     const audio = document.getElementById("bgMusic");
     btn.addEventListener("click", () => {
@@ -518,16 +491,7 @@
       }
     });
 
-    /* การ์ดค่อยๆ ปรากฏตอนเลื่อนหน้า */
-    if ("IntersectionObserver" in window && !reduceMotion) {
-      const io = new IntersectionObserver(entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
-      }), { threshold: .15 });
-      document.querySelectorAll(".about-card, .review-wrap, .benefit-card, .buy-card")
-        .forEach(el => { el.classList.add("reveal"); io.observe(el); });
-    }
-
-    /* วงน้ำกระเพื่อมเมื่อคลิกใน Hero */
+    /* ---------- วงน้ำกระเพื่อมเมื่อคลิกใน Hero ---------- */
     if (!reduceMotion) {
       hero.addEventListener("click", e => {
         const r = hero.getBoundingClientRect();
@@ -540,14 +504,14 @@
       });
     }
 
-    /* แถบความคืบหน้าตอนเลื่อนหน้า */
+    /* ---------- แถบความคืบหน้าตอนเลื่อนหน้า ---------- */
     const bar = document.getElementById("progress");
     addEventListener("scroll", () => {
       const h = document.documentElement;
       bar.style.width = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100 + "%";
     }, { passive: true });
 
-    /* ปกหนังสือเอียงตามเมาส์ (เฉพาะอุปกรณ์ที่มีเมาส์) */
+    /* ---------- ปกหนังสือเอียงตามเมาส์ (เฉพาะอุปกรณ์ที่มีเมาส์) ---------- */
     const cover = document.querySelector(".book-img");
     if (!reduceMotion && matchMedia("(hover: hover)").matches) {
       hero.addEventListener("mousemove", e => {
